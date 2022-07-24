@@ -21,7 +21,12 @@ export default {
 
   plugins: [],
 
-  components: true,
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ],
 
   buildModules: [
     '@nuxt/typescript-build'

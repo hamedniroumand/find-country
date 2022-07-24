@@ -1,5 +1,19 @@
 @import 'reset', 'fonts', 'typography';
 
+:root {
+  --background-color-primary: #{$color-light-mode-primary};
+  --background-color-secondary: #{$color-light-mode-secondary};
+  --color-text: #{$color-light-mode-text};
+  --color-shadow: #{$color-light-mode-shadow};
+}
+
+:root.dark {
+  --background-color-primary: #{$color-dark-mode-primary};
+  --background-color-secondary: #{$color-dark-mode-secondary};
+  --color-text: #{$color-dark-mode-text};
+  --color-shadow: #{$color-dark-mode-shadow};
+}
+
 body {
   background-color: var(--background-color-primary);
   transition: background .25s;

@@ -1,1 +1,6 @@
 @import 'reset', 'fonts', 'typography';
+
+body {
+  background-color: var(--background-color-primary);
+  transition: background .25s;
+}

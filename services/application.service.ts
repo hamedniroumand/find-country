@@ -6,6 +6,7 @@ class ApplicationService {
 
     if (theme) {
       document.documentElement.classList.add(theme);
+      window.$nuxt.$store.dispatch('application/setLayoutTheme', theme);
     }
   }
 
@@ -16,6 +17,7 @@ class ApplicationService {
 
     localStorage.setItem(APPLICATION_LOCAL_STORAGE_THEME_KEY, theme);
     document.documentElement.className = theme;
+    window.$nuxt.$store.dispatch('application/setLayoutTheme', theme);
   }
 }
 

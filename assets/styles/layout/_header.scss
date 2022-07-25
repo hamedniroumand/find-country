@@ -1,18 +1,24 @@
 .header {
-  @include flex-between;
+  position: sticky;
+  top: 0;
   background-color: var(--background-color-secondary);
   box-shadow: 0 -6px 12px 1px var(--color-shadow);
-  padding: 1rem;
+  padding: 1rem 0;
+  z-index: 10;
 
   @include responsive(md) {
     font-size: $font-size-bold;
-    padding: 1rem 5rem;
+  }
+
+  .container {
+    @include flex-between;
   }
 
   &__title {
     font-size: inherit;
     font-weight: bold;
     color: var(--color-text);
+    cursor: pointer;
   }
 
   &__btn {

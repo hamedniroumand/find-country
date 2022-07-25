@@ -1,0 +1,27 @@
+.search_form {
+  height: 3rem;
+  background-color: var(--background-color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 0 2px 0 var(--color-shadow);
+
+  input {
+    width: 100%;
+    background: none !important;
+    border: none;
+    color: var(--color-text);
+    margin-left: 0.8rem;
+
+    &::placeholder {
+      color: #9f9f9f;
+    }
+    &:focus-within {
+      outline: none;
+    }
+  }
+}

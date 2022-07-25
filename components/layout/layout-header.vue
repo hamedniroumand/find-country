@@ -1,12 +1,14 @@
 <template>
   <header class="header">
-    <h1 class="header__title">
-      Where in the world?
-    </h1>
-    <button class="header__btn" @click="changeTheme">
-      <moon-icon :filled="isMoonIconFilled" />
-      Dark Mode
-    </button>
+    <div class="container">
+      <nuxt-link tag="h1" class="header__title" to="/">
+        Where in the world?
+      </nuxt-link>
+      <button class="header__btn" @click="changeTheme">
+        <moon-icon :filled="isMoonIconFilled" />
+        Dark Mode
+      </button>
+    </div>
   </header>
 </template>
 

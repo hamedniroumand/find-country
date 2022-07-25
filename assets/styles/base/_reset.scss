@@ -1,15 +1,13 @@
 html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
+  width: 100% !important;
 }
 
 * {
   margin: 0;
   padding: 0;
-}
-
-body {
-  margin: 0;
+  box-sizing: border-box;
 }
 
 main {

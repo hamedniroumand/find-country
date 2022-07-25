@@ -19,7 +19,10 @@ export default {
     '~/assets/styles/main.scss'
   ],
 
-  plugins: [],
+  plugins: [
+    '~/plugins/directives',
+    '~/plugins/filters'
+  ],
 
   components: [
     {
@@ -32,7 +35,17 @@ export default {
     '@nuxt/typescript-build'
   ],
 
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+    ['nuxt-lazy-load', {
+      directiveOnly: true,
+      defaultImage: '/images/default-image.jpg'
+    }]
+  ],
 
-  build: {}
+  build: {},
+
+  router: {
+    base: '/countries'
+  }
 };

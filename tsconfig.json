@@ -9,6 +9,7 @@
       "DOM"
     ],
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
@@ -21,17 +22,19 @@
         "./*"
       ],
       "@/*": [
-        "./components*"
+        "./components/*"
       ]
     },
     "types": [
       "@nuxt/types",
-      "@types/node"
+      "@types/node",
+      "@nuxtjs/axios",
+      "@nuxt/image",
     ]
   },
   "exclude": [
     "node_modules",
     ".nuxt",
-    "dist"
+    "dist",
   ]
 }

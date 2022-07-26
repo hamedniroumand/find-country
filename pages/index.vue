@@ -2,20 +2,12 @@
   <div class="container">
     <section class="filters">
       <search-form :query="$route.query.q" @submit="searchOnCountries" />
-      <select-box :value="selectedRegionValue" :items="regions" placeholder="Filter by Region" @select="filterRegions" />
+      <div style="display: flex">
+        <select-box :value="selectedRegionValue" :items="regions" placeholder="Filter by Region" @select="filterRegions" />
+        <select-box :value="selectedRegionValue" :items="regions" placeholder="Filter by Region" @select="filterRegions" />
+      </div>
     </section>
-    <transition-group
-      v-if="filteredCountries.length"
-      tag="section"
-      name="fade"
-      appear
-      class="countries"
-    >
-      <country-card v-for="country in filteredCountries" :key="country.alpha3Code" :country="country" :width="cardWidth" />
-    </transition-group>
-    <p v-else class="not-found">
-      No result found.
-    </p>
+    <country-list :countries="filteredCountries" />
   </div>
 </template>
 
@@ -44,12 +36,9 @@ import { DropdownItemModel } from '~/models/abstract.model';
 export default class IndexPage extends Vue {
   /** *************** Properties *****************/
   countries: CountryModel[] = [];
-  cardWidth: number = 0;
-  region: DropdownItemModel | null = null;
   regions: DropdownItemModel[];
 
   /** *************** Getters *****************/
-
   /**
    * filter on country list and display them.
    */
@@ -66,7 +55,7 @@ export default class IndexPage extends Vue {
    * Get selected region object based on selected value of dropdown
    */
   get selectedRegion() {
-    return this.regions.find(region => region.value.toLowerCase() === this.region?.value?.toLowerCase()) || null;
+    return this.regions.find(region => region.title.toLowerCase() === this.$route.query?.region?.toString()?.toLowerCase()) || null;
   }
 
   get selectedRegionValue() {
@@ -74,7 +63,6 @@ export default class IndexPage extends Vue {
   }
 
   /** *************** Methods *****************/
-
   /**
    * Add or remove search query params.
    */
@@ -87,21 +75,9 @@ export default class IndexPage extends Vue {
    * Set selected region after choosing dropdown item and append or remove region query params.
    */
   filterRegions(regionValue: string | null) {
-    this.region = this.regions.find(region => region.value.toLowerCase() === regionValue?.toLowerCase()) || null;
-    this.toggleQueryString({ key: 'region', value: this.region?.title || null });
-  }
+    const region = this.regions.find(region => region.value.toLowerCase() === regionValue?.toLowerCase()) || null;
 
-  /**
-   * Calculating the width of the country card image to calculate their height based on 4/3 ratio.
-   */
-  calcCardWidth() {
-    this.$nextTick(() => {
-      const width = document.querySelector('.countries__card')?.clientWidth;
-
-      if (width) {
-        this.cardWidth = width;
-      }
-    });
+    this.toggleQueryString({ key: 'region', value: region?.title || null });
   }
 
   /**
@@ -135,21 +111,19 @@ export default class IndexPage extends Vue {
       }
     });
   }
-
-  /** *************** Vue Life cycles *****************/
-
-  created() {
-    if (process.client) {
-      this.calcCardWidth();
-      window.addEventListener('resize', this.calcCardWidth);
-    }
-    if (this.$route.query.region) {
-      this.region = this.regions.find(region => region.title.toLowerCase() === this.$route.query.region) || null;
-    }
-  }
-
-  destroyed() {
-    window.removeEventListener('resize', this.calcCardWidth);
-  }
 }
 </script>
+
+<style lang="scss" scoped>
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @include responsive(md) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+</style>

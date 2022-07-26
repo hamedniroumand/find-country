@@ -1,0 +1,12 @@
+.ui-button {
+    background: var(--background-color-secondary);
+    box-shadow: 0 0 2px 0 var(--color-shadow);
+    border: none;
+    padding: .6rem 1.3rem;
+    color: var(--color-text);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    cursor: pointer;
+}

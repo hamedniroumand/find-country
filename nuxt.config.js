@@ -32,8 +32,16 @@ export default {
   ],
 
   buildModules: [
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/style-resources'
   ],
+
+  styleResources: {
+    scss: [
+      './assets/styles/abstracts/_variables.scss',
+      './assets/styles/abstracts/_mixins.scss'
+    ]
+  },
 
   modules: [
     '@nuxtjs/axios',

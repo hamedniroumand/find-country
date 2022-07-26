@@ -1,8 +1,10 @@
 <template>
-  <main>
+  <div>
     <layout-header />
-    <nuxt />
-  </main>
+    <main class="layout_wrapper">
+      <nuxt />
+    </main>
+  </div>
 </template>
 
 <script lang="ts">

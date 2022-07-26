@@ -24,27 +24,32 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 import { DropdownItemModel } from '~/models/abstract.model';
 
 @Component
 export default class SelectBox extends Vue {
+  /** *************** Props *****************/
     @Prop({ type: String, required: true }) readonly placeholder: string;
     @Prop({ type: Array, required: true }) readonly items: DropdownItemModel[];
     @Prop() readonly value: string | null;
 
+    /** *************** Properties *****************/
     selectedValue: string | null = null;
     open: boolean = false;
 
-    constructor() {
-      super();
-      this.selectedValue = this.value || null;
-    }
-
+    /** *************** Getters *****************/
     get dropdownText() {
       return this.selectedValue ? this.items.find(item => item.value === this.selectedValue)?.title : this.placeholder;
     }
 
+    /** *************** Watchers *****************/
+    @Watch('value')
+    onValueChanged() {
+      this.selectedValue = this.value || null;
+    }
+
+    /** *************** Methods *****************/
     selectItem(value: string) {
       this.selectedValue = this.selectedValue !== value ? value : null;
       this.open = false;
@@ -53,6 +58,11 @@ export default class SelectBox extends Vue {
 
     outsideClicked() {
       this.open = false;
+    }
+
+    /** *************** Vue Life cycles *****************/
+    created() {
+      this.selectedValue = this.value || null;
     }
 }
 </script>

@@ -51,9 +51,5 @@ export default {
     }]
   ],
 
-  build: {},
-
-  router: {
-    base: '/countries'
-  }
+  build: {}
 };

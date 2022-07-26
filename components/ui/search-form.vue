@@ -1,8 +1,5 @@
 <template>
-  <form
-    class="search_form"
-    autocomplete="off"
-  >
+  <div class="search_form">
     <search-icon :filled="layoutTheme === 'dark'" />
     <input
       name="search"
@@ -11,7 +8,7 @@
       :value="search"
       @input="$emit('submit', $event.target.value)"
     >
-  </form>
+  </div>
 </template>
 
 <script lang="ts">

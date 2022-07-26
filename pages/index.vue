@@ -2,7 +2,7 @@
   <div class="container">
     <section class="filters">
       <search-form :query="$route.query.q" @submit="searchOnCountries" />
-      <div style="display: flex">
+      <div class="dropdowns">
         <select-box :value="selectedSortValue" :items="sorts" placeholder="Sort Countries" @select="sortCounties" />
         <select-box :value="selectedRegionValue" :items="regions" placeholder="Filter by Region" @select="filterRegions" />
       </div>
@@ -154,6 +154,17 @@ export default class IndexPage extends Vue {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .dropdowns {
+    display: flex;
+    gap: .5rem;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @include responsive(md) {
+      flex-direction: row;
+    }
   }
 }
 </style>

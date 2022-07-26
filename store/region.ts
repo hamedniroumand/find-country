@@ -3,16 +3,21 @@ import { DropdownItemModel } from '~/models/abstract.model';
 
 export const state = () => ({
   regions: [
-    { title: 'Africa', value: 'Africa' },
-    { title: 'America', value: 'Americas' },
-    { title: 'Asia', value: 'Asia' },
-    { title: 'Europe', value: 'Europe' },
-    { title: 'Oceania', value: 'Oceania' }
-  ] as DropdownItemModel[]
+    { title: 'Africa', value: 'africa' },
+    { title: 'America', value: 'americas' },
+    { title: 'Asia', value: 'asia' },
+    { title: 'Europe', value: 'europe' },
+    { title: 'Oceania', value: 'oceania' }
+  ] as DropdownItemModel[],
+  sorts: [
+    { title: 'Sort as Country Name', value: 'country-name' },
+    { title: 'Sort as Population', value: 'population' }
+  ]
 });
 
 type RootState = ReturnType<typeof state>;
 
 export const getters: GetterTree<RootState, RootState> = {
-  regions: state => state.regions
+  regions: state => state.regions,
+  sorts: state => state.sorts
 };

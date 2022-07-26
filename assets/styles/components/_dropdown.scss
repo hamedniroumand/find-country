@@ -1,7 +1,7 @@
 .ui_dropdown {
   height: 3rem;
   position: relative;
-  width: 12rem;
+  min-width: 13rem;
 
   &__button {
     @include flex-between;

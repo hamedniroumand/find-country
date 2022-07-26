@@ -3,7 +3,7 @@
     <section class="filters">
       <search-form :query="$route.query.q" @submit="searchOnCountries" />
       <div style="display: flex">
-        <select-box :value="selectedRegionValue" :items="regions" placeholder="Filter by Region" @select="filterRegions" />
+        <select-box :value="selectedSortValue" :items="sorts" placeholder="Sort Countries" @select="sortCounties" />
         <select-box :value="selectedRegionValue" :items="regions" placeholder="Filter by Region" @select="filterRegions" />
       </div>
     </section>
@@ -15,12 +15,13 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
+import { SORT_VALUES } from '../constants';
 import { Debounce } from '~/utils/decorator';
 import { CountryModel } from '~/models/country.model';
 import { DropdownItemModel } from '~/models/abstract.model';
 
 @Component({
-  computed: mapGetters('region', ['regions']),
+  computed: mapGetters('region', ['regions', 'sorts']),
   async asyncData({ store, error }) {
     try {
       const countries = await store.dispatch('country/fetchAllCountries');
@@ -37,6 +38,7 @@ export default class IndexPage extends Vue {
   /** *************** Properties *****************/
   countries: CountryModel[] = [];
   regions: DropdownItemModel[];
+  sorts: DropdownItemModel[];
 
   /** *************** Getters *****************/
   /**
@@ -45,21 +47,33 @@ export default class IndexPage extends Vue {
   get filteredCountries() {
     let countries: CountryModel[] = [];
 
-    countries = this.handleSearchCountryFilter(this.countries);
-    countries = this.handleRegionFilter(countries);
+    countries = this.handleSearchCountries(this.countries);
+    countries = this.handleFilterRegion(countries);
+    countries = this.handleSortCountries(countries);
 
     return countries;
   }
 
   /**
-   * Get selected region object based on selected value of dropdown
+   * Get selected region object based on selected value of dropdown.
    */
   get selectedRegion() {
-    return this.regions.find(region => region.title.toLowerCase() === this.$route.query?.region?.toString()?.toLowerCase()) || null;
+    return this.regions.find(region => region.value.toLowerCase() === this.$route.query?.region?.toString()?.toLowerCase()) || null;
   }
 
   get selectedRegionValue() {
     return this.selectedRegion ? this.selectedRegion.value : null;
+  }
+
+  /**
+   * Get selected sort object based on selected value of dropdown.
+   */
+  get selectedSort() {
+    return this.sorts.find(sort => sort.value.toLowerCase() === this.$route.query?.sort?.toString()?.toLowerCase()) || this.sorts[0];
+  }
+
+  get selectedSortValue() {
+    return this.selectedSort ? this.selectedSort.value : null;
   }
 
   /** *************** Methods *****************/
@@ -72,18 +86,23 @@ export default class IndexPage extends Vue {
   }
 
   /**
-   * Set selected region after choosing dropdown item and append or remove region query params.
+   * Add or remove region value from url's query strings after region selected
    */
   filterRegions(regionValue: string | null) {
-    const region = this.regions.find(region => region.value.toLowerCase() === regionValue?.toLowerCase()) || null;
+    this.toggleQueryString({ key: 'region', value: regionValue });
+  }
 
-    this.toggleQueryString({ key: 'region', value: region?.title || null });
+  /**
+   * Add or remove sort value from url's query strings after sort selected.
+  */
+  sortCounties(sortValue: string | null) {
+    this.toggleQueryString({ key: 'sort', value: sortValue });
   }
 
   /**
    * Filter countries by their name.
   */
-  handleSearchCountryFilter(countries: CountryModel[]): CountryModel[] {
+  handleSearchCountries(countries: CountryModel[]): CountryModel[] {
     const search = this.$route.query.q?.toString()?.toLowerCase();
 
     if (!search) { return countries; }
@@ -95,9 +114,20 @@ export default class IndexPage extends Vue {
   /**
    * Filter countries by their region.
   */
-  handleRegionFilter(countries: CountryModel[]): CountryModel[] {
+  handleFilterRegion(countries: CountryModel[]): CountryModel[] {
     if (!this.selectedRegionValue) { return countries; }
     return countries.filter(country => country.region.toLowerCase() === this.selectedRegionValue!.toLowerCase());
+  }
+
+  /**
+   * Sort countries as population or name.
+  */
+  handleSortCountries(countries: CountryModel[]): CountryModel[] {
+    if (!this.selectedSortValue) { return countries; }
+    if (this.selectedSort?.value === SORT_VALUES.population) {
+      return [...countries].sort((a, b) => b.population - a.population);
+    }
+    return [...countries].sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /**

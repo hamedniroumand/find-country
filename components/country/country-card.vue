@@ -6,15 +6,15 @@
         {{ country.name }}
       </nuxt-link>
       <ul class="card_list">
-        <li class="card_list__item">
+        <li v-if="country.population" class="card_list__item">
           <span class="card_list__item--title">Population:</span>
           {{ country.population | numberWithComma }}
         </li>
-        <li class="card_list__item">
+        <li v-if="country.region" class="card_list__item">
           <span class="card_list__item--title">Region:</span>
           {{ country.region }}
         </li>
-        <li class="card_list__item">
+        <li v-if="country.capital" class="card_list__item">
           <span class="card_list__item--title">Capital:</span>
           {{ country.capital }}
         </li>

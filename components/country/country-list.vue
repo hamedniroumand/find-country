@@ -24,7 +24,7 @@ export default class CountryList extends Vue {
     @Prop({ required: true, type: Array, default: () => [] }) readonly countries: CountryModel[];
 
     /** *************** Properties *****************/
-    cardWidth: number = 0;
+    cardWidth: number = 200;
 
     /** *************** Methods *****************/
     /**

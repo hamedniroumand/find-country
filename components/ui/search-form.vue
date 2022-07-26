@@ -2,10 +2,10 @@
   <div class="search_form">
     <search-icon :filled="layoutTheme === 'dark'" />
     <input
-      name="search"
       type="text"
       placeholder="Search for a country..."
       :value="search"
+      autocomplete="off"
       @input="$emit('submit', $event.target.value)"
     >
   </div>
